@@ -78,6 +78,7 @@ public class AuthenticationController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String jwt = jwtutil.generateToken(userDetails.getUsername());
+        System.out.println(jwt);
         User user = userRepository.findFirstByEmail(authenticationRequest.getUsername());
         response.getWriter().write(new JSONObject()
                 .put("userId", user.getId())
