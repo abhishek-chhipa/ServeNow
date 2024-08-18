@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
 @RestController
 @RequestMapping("/api/company")
@@ -59,6 +60,17 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @GetMapping("/bookings/{companyId}")
+    public ResponseEntity<?> getAllAdBookings(@PathVariable Long companyId) throws IOException{
+        return ResponseEntity.ok(companyService.getAllAdBookings(companyId));
+    }
 
-
+    @GetMapping("/booking/{bookingId}/{status}")
+    public ResponseEntity<?> changeBookingStatus(@PathVariable Long bookingId, @PathVariable String status) throws IOException{
+        boolean success = companyService.changeBookingStatus(bookingId,status);
+        if (success){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
